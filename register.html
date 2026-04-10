@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Souq Al-Nakhil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-body">
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="home.html" class="brand">
+        <img src="logo.png" alt="Souq Al-Nakhil Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-title">Souq Al-Nakhil</span>
+          <span class="brand-subtitle">Fresh Saudi Dates Marketplace</span>
+        </div>
+      </a>
+
+      <nav class="site-nav">
+        <a href="login.html" class="nav-btn nav-btn-outline">Login</a>
+        <a href="register.html" class="nav-btn nav-btn-solid">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth-wrapper">
+    <div class="auth-layout">
+
+      <section class="auth-left">
+        <div class="hero-text">
+          <h1>Join Souq Al-Nakhil</h1>
+          <p>
+            Create your account to start exploring local farms and fresh Saudi dates.
+          </p>
+        </div>
+
+        <div class="hero-image-box">
+          <img src="images/farmer-register.jpg" alt="Register" class="hero-image">
+        </div>
+      </section>
+
+      <section class="auth-right">
+        <div class="auth-card">
+          <h2>Create Account</h2>
+          <p class="auth-subtitle">Register to continue</p>
+
+          <form class="auth-form">
+
+            <label for="full-name">Full Name</label>
+            <input
+              type="text"
+              id="full-name"
+              name="full-name"
+              placeholder="Enter your full name"
+              required
+            >
+
+            <label for="register-email">Email</label>
+            <input
+              type="email"
+              id="register-email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            >
+
+            <label for="register-password">Password</label>
+            <input
+              type="password"
+              id="register-password"
+              name="password"
+              placeholder="Enter your password"
+              required
+              minlength="6"
+            >
+
+           <!-- Customer -->
+<button type="submit"
+        formaction="home.html"
+        formmethod="get"
+        class="auth-btn auth-btn-customer">
+  Register as Customer
+</button>
+
+<!-- Farmer -->
+<button type="submit"
+        formaction="farmerdashboard.html"
+        formmethod="get"
+        class="auth-btn auth-btn-farmer">
+  Register as Farmer
+</button>
+
+          </form>
+
+          <p class="auth-link">
+            Already have an account? <a href="login.html">Log in</a>
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>Souq Al-Nakhil</h3>
+        <p>
+          A trusted Saudi marketplace connecting local farms with customers,
+          making it easier to discover fresh, high-quality dates from different regions.
+        </p>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Email: support@souqalnakhil.com</p>
+        <p>Riyadh, Saudi Arabia</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Souq Al-Nakhil. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

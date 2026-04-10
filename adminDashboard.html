@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Souq Al-Nakhil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="home.html" class="brand">
+        <img src="logo.png" alt="Souq Al-Nakhil Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-title">Souq Al-Nakhil</span>
+          <span class="brand-subtitle">Admin Panel</span>
+        </div>
+      </a>
+
+      <nav class="site-nav">
+        <a href="login.html" class="nav-btn nav-btn-outline">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="back-wrap">
+    <button type="button" class="back-btn" onclick="goBackSafe('home.html')">← Back</button>
+  </div>
+
+  <main class="page-shell">
+    <section class="dashboard-hero">
+      <div class="dashboard-hero-top">
+        <div>
+          <span class="status-badge active">Admin Controls</span>
+          <h1>Admin Dashboard</h1>
+        </div>
+        <div class="welcome-panel">
+          <div class="welcome-pill">Welcome, Sarah</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-row">
+      <div class="dashboard-stat">
+        <strong id="customerCount">35</strong>
+        <span>Total Customers</span>
+        <p>Customer accounts currently visible in the platform.</p>
+      </div>
+      <div class="dashboard-stat">
+        <strong id="farmerCount">15</strong>
+        <span>Total Farmers</span>
+        <p>Farmer accounts registered in the system.</p>
+      </div>
+      <div class="dashboard-stat">
+        <strong id="trustedCount">4</strong>
+        <span>Trusted Farmers</span>
+        <p>Verified farms with the Trusted Farmer Badge.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <h3>Manage Customer And Farmer Submitted Information</h3>
+        </div>
+      </div>
+
+      <div class="success-banner hidden-panel" id="editMessage">
+        Information updated successfully. The latest changes are now reflected on the profile.
+      </div>
+
+      <div class="success-banner hidden-panel" id="removeMessage">
+        Submitted information removed successfully. It is no longer visible on the platform.
+      </div>
+
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Submitted Information</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="managementTableBody">
+            <tr data-role="Customer">
+              <td>Ahmed Al-Qahtani</td>
+              <td>Customer</td>
+              <td>ahmed@email.com</td>
+              <td><span class="pill active">Active</span></td>
+              <td>Account details verified</td>
+              <td>
+                <div class="table-actions">
+                  <button class="mini-btn edit admin-edit-btn" type="button">Edit</button>
+                  <button class="mini-btn delete admin-remove-btn" type="button">Remove</button>
+                </div>
+              </td>
+            </tr>
+            <tr data-role="Farmer">
+              <td>Abdulrahman Al-Harbi</td>
+              <td>Farmer</td>
+              <td>abdulrahman@nakhil.sa</td>
+              <td><span class="pill review">Needs Review</span></td>
+              <td>Farm description needs correction</td>
+              <td>
+                <div class="table-actions">
+                  <button class="mini-btn edit admin-edit-btn" type="button">Edit</button>
+                  <button class="mini-btn delete admin-remove-btn" type="button">Remove</button>
+                </div>
+              </td>
+            </tr>
+            <tr data-role="Customer">
+              <td>Sara Al-Harbi</td>
+              <td>Customer</td>
+              <td>sara@email.com</td>
+              <td><span class="pill active">Active</span></td>
+              <td>Outdated phone number</td>
+              <td>
+                <div class="table-actions">
+                  <button class="mini-btn edit admin-edit-btn" type="button">Edit</button>
+                  <button class="mini-btn delete admin-remove-btn" type="button">Remove</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <h3>Verify Farms And Assign Trusted Farmer Badge</h3>
+        </div>
+      </div>
+
+      <div class="success-banner hidden-panel" id="verifyMessage">
+        Farm verification updated successfully.
+      </div>
+
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Farm Name</th>
+              <th>Region</th>
+              <th>Status</th>
+              <th>Badge</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="verificationTableBody">
+            <tr>
+              <td>AlQassim Farm</td>
+              <td>Qassim</td>
+              <td><span class="pill review">Pending</span></td>
+              <td><span class="badge-text">Not Assigned</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="mini-btn edit verify-btn" type="button">Verify</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Madinah Farm</td>
+              <td>Madinah</td>
+              <td><span class="pill approved">Verified</span></td>
+              <td><span class="badge-text">Trusted Farmer</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="mini-btn plain verify-btn" type="button">Remove Badge</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Al-Ahsa Harvest</td>
+              <td>Al-Ahsa</td>
+              <td><span class="pill review">Pending</span></td>
+              <td><span class="badge-text">Not Assigned</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="mini-btn edit verify-btn" type="button">Verify</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop hidden-panel" id="editModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <span class="status-badge active">Edit Information</span>
+          <h3>Edit Customer Or Farmer Details</h3>
+        </div>
+        <button class="modal-close" type="button" id="closeEditModal">×</button>
+      </div>
+
+      <form class="modal-form" id="editForm">
+        <label for="editName">Name</label>
+        <input id="editName" name="editName" type="text" placeholder="Enter full name" required>
+
+        <label for="editRole">Role</label>
+        <input id="editRole" name="editRole" type="text" readonly>
+
+        <label for="editEmail">Email</label>
+        <input id="editEmail" name="editEmail" type="email" placeholder="Enter email address" required>
+
+        <label for="editStatus">Status</label>
+        <select id="editStatus" name="editStatus" required>
+          <option value="active">Active</option>
+          <option value="review">Needs Review</option>
+        </select>
+
+        <label for="editInfo">Submitted Information</label>
+        <textarea id="editInfo" name="editInfo" placeholder="Write the submitted information details" required></textarea>
+
+        <div class="modal-actions">
+          <button class="mini-btn plain modal-btn" type="button" id="cancelEditModal">Cancel</button>
+          <button class="mini-btn edit modal-btn" type="submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>Souq Al-Nakhil</h3>
+        <p>
+          A trusted Saudi marketplace connecting local farms with customers,
+          making it easier to discover fresh, high-quality dates from different regions.
+        </p>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Email: support@souqalnakhil.com</p>
+        <p>Riyadh, Saudi Arabia</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Souq Al-Nakhil. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    const editMessage = document.getElementById("editMessage");
+    const removeMessage = document.getElementById("removeMessage");
+    const verifyMessage = document.getElementById("verifyMessage");
+    const editModal = document.getElementById("editModal");
+    const editForm = document.getElementById("editForm");
+    const closeEditModal = document.getElementById("closeEditModal");
+    const cancelEditModal = document.getElementById("cancelEditModal");
+    const customerCount = document.getElementById("customerCount");
+    const farmerCount = document.getElementById("farmerCount");
+    const trustedCount = document.getElementById("trustedCount");
+
+    let customerTotal = 35;
+    let farmerTotal = 15;
+    let trustedTotal = 4;
+    let editingRow = null;
+
+    function flashMessage(element) {
+      element.classList.remove("hidden-panel");
+      setTimeout(function () {
+        element.classList.add("hidden-panel");
+      }, 2200);
+    }
+
+    function renderDashboardCounts() {
+      customerCount.textContent = String(customerTotal);
+      farmerCount.textContent = String(farmerTotal);
+      trustedCount.textContent = String(trustedTotal);
+    }
+
+    function openEditModal(row) {
+      editingRow = row;
+      document.getElementById("editRole").value = row.children[1].textContent.trim();
+      document.getElementById("editName").value = row.children[0].textContent.trim();
+      document.getElementById("editEmail").value = row.children[2].textContent.trim();
+      document.getElementById("editInfo").value = row.children[4].textContent.trim();
+      document.getElementById("editStatus").value =
+        row.children[3].querySelector(".pill").textContent.trim() === "Active" ? "active" : "review";
+      editModal.classList.remove("hidden-panel");
+      document.getElementById("editName").focus();
+    }
+
+    function hideEditModal() {
+      editModal.classList.add("hidden-panel");
+      editForm.reset();
+      editingRow = null;
+    }
+
+    closeEditModal.addEventListener("click", hideEditModal);
+    cancelEditModal.addEventListener("click", hideEditModal);
+
+    editModal.addEventListener("click", function (event) {
+      if (event.target === editModal) {
+        hideEditModal();
+      }
+    });
+
+    editForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!editingRow) return;
+
+      const nextName = document.getElementById("editName").value.trim();
+      const nextEmail = document.getElementById("editEmail").value.trim();
+      const nextStatus = document.getElementById("editStatus").value;
+      const nextInfo = document.getElementById("editInfo").value.trim();
+
+      editingRow.children[0].textContent = nextName;
+      editingRow.children[2].textContent = nextEmail;
+      editingRow.children[4].textContent = nextInfo;
+
+      const statusPill = editingRow.children[3].querySelector(".pill");
+      if (nextStatus === "active") {
+        statusPill.textContent = "Active";
+        statusPill.className = "pill active";
+      } else {
+        statusPill.textContent = "Needs Review";
+        statusPill.className = "pill review";
+      }
+
+      hideEditModal();
+      flashMessage(editMessage);
+      renderDashboardCounts();
+    });
+
+    document.addEventListener("click", function (event) {
+      const editButton = event.target.closest(".admin-edit-btn");
+      const removeButton = event.target.closest(".admin-remove-btn");
+      const verifyButton = event.target.closest(".verify-btn");
+
+      if (editButton) {
+        openEditModal(editButton.closest("tr"));
+        return;
+      }
+
+      if (removeButton) {
+        const confirmed = window.confirm("Are you sure you want to remove this submitted information?");
+        if (!confirmed) return;
+
+        const row = removeButton.closest("tr");
+        const role = row.children[1].textContent.trim();
+
+        if (role === "Customer" && customerTotal > 0) customerTotal -= 1;
+        if (role === "Farmer" && farmerTotal > 0) farmerTotal -= 1;
+
+        row.remove();
+        flashMessage(removeMessage);
+        renderDashboardCounts();
+        return;
+      }
+
+      if (verifyButton) {
+        const row = verifyButton.closest("tr");
+        const statusPill = row.children[2].querySelector(".pill");
+        const badgePill = row.children[3].querySelector("span");
+
+        if (verifyButton.textContent.trim() === "Verify") {
+          statusPill.textContent = "Verified";
+          statusPill.className = "pill approved";
+          badgePill.textContent = "Trusted Farmer";
+          verifyButton.textContent = "Remove Badge";
+          verifyButton.className = "mini-btn plain verify-btn";
+          trustedTotal += 1;
+        } else {
+          statusPill.textContent = "Pending";
+          statusPill.className = "pill review";
+          badgePill.textContent = "Not Assigned";
+          verifyButton.textContent = "Verify";
+          verifyButton.className = "mini-btn edit verify-btn";
+          if (trustedTotal > 0) trustedTotal -= 1;
+        }
+
+        flashMessage(verifyMessage);
+        renderDashboardCounts();
+      }
+    });
+
+    renderDashboardCounts();
+  </script>
+</body>
+</html>

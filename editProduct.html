@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Product - Souq Al-Nakhil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="home.html" class="brand">
+        <img src="logo.png" alt="Souq Al-Nakhil Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-title">Souq Al-Nakhil</span>
+          <span class="brand-subtitle">Farmer Panel</span>
+        </div>
+      </a>
+
+      <nav class="site-nav">
+        <a href="Farmerdashboard.html" class="nav-btn nav-btn-outline">Dashboard</a>
+        <a href="login.html" class="nav-btn nav-btn-outline">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="back-wrap">
+    <button type="button" class="back-btn" data-back-fallback="Farmerdashboard.html">← Back</button>
+  </div>
+
+  <div class="container">
+    <h2>Edit Product</h2>
+    <p class="subtitle">Update the product information below.</p>
+
+    <form id="editProductForm">
+      <label for="productName">Product Name</label>
+      <input type="text" id="productName" placeholder="Enter product name">
+
+      <label for="dateType">Date Type</label>
+      <select id="dateType">
+        <option value="">Select date type</option>
+        <option>Ajwa</option>
+        <option>Khalas</option>
+        <option>Sukkari</option>
+      </select>
+
+      <label for="price">Price (SAR)</label>
+      <input type="number" id="price" placeholder="Enter price">
+
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" placeholder="Enter quantity">
+
+      <label for="originRegion">Region</label>
+      <select id="originRegion">
+        <option value="">Select region</option>
+        <option>Najd</option>
+        <option>Qassim</option>
+        <option>Al-Ahsa</option>
+      </select>
+
+      <label for="productDescription">Product Description</label>
+      <textarea id="productDescription" placeholder="Describe the product"></textarea>
+
+      <label for="productImage">Product Image</label>
+      <input type="file" id="productImage" accept="image/*">
+
+      <div class="image-preview-box">
+        <img id="imagePreview" src="" alt="Preview" style="display:none;">
+      </div>
+
+      <p id="productError" class="error-message"></p>
+      <p id="productSuccess" class="success-message"></p>
+      <p id="productFormMessage" class="form-message"></p>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>Souq Al-Nakhil</h3>
+        <p>
+          A trusted Saudi marketplace connecting local farms with customers,
+          making it easier to discover fresh, high-quality dates from different regions.
+        </p>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>Email: support@souqalnakhil.com</p>
+        <p>Riyadh, Saudi Arabia</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Souq Al-Nakhil. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
