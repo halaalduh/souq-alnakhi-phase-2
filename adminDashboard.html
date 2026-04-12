@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=AdminDashboard.php">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard - Souq Al-Nakhil</title>
   <link rel="stylesheet" href="style.css">
@@ -10,7 +11,7 @@
 
   <header class="site-header">
     <div class="header-container">
-      <a href="home.html" class="brand">
+      <a href="home.php" class="brand">
         <img src="logo.png" alt="Souq Al-Nakhil Logo" class="brand-logo">
         <div class="brand-text">
           <span class="brand-title">Souq Al-Nakhil</span>
@@ -19,13 +20,14 @@
       </a>
 
       <nav class="site-nav">
-        <a href="login.html" class="nav-btn nav-btn-outline">Logout</a>
+        <a href="logout.php" class="nav-btn nav-btn-outline">Logout</a>
+        <a href="profile.php" class="nav-btn nav-btn-outline">Edit Profile</a>
       </nav>
     </div>
   </header>
 
   <div class="back-wrap">
-    <button type="button" class="back-btn" onclick="goBackSafe('home.html')">← Back</button>
+    <button type="button" class="back-btn" onclick="goBackSafe('home.php')">← Back</button>
   </div>
 
   <main class="page-shell">

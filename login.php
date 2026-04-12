@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $message = "";
 $messageType = "";
 
@@ -7,17 +9,14 @@ if (isset($_GET['error'])) {
         $message = "Please enter email and password.";
     } elseif ($_GET['error'] === "email") {
         $message = "Invalid email format.";
-    } elseif ($_GET['error'] === "invalid") {
-        $message = "Invalid credentials.";
+    } elseif ($_GET['error'] === "notfound") {
+        $message = "This account does not exist.";
+    } elseif ($_GET['error'] === "wrongpassword") {
+        $message = "Incorrect password.";
     } else {
         $message = "Something went wrong.";
     }
     $messageType = "error-message";
-}
-
-if (isset($_GET['success'])) {
-    $message = "Login successful.";
-    $messageType = "success-message";
 }
 ?>
 <!DOCTYPE html>
@@ -80,9 +79,7 @@ if (isset($_GET['success'])) {
             <input type="password" id="login-password" name="password" placeholder="Enter your password">
 
             <div class="auth-actions">
-              <button type="submit" class="auth-btn auth-btn-customer" name="role" value="customer">Log in as Customer</button>
-              <button type="submit" class="auth-btn auth-btn-farmer" name="role" value="farmer">Log in as Farmer</button>
-              <button type="submit" class="auth-btn auth-btn-admin" name="role" value="admin">Log in as Admin</button>
+              <button type="submit" class="auth-btn auth-btn-customer">Login</button>
             </div>
 
             <p class="form-message <?php echo $messageType; ?>">

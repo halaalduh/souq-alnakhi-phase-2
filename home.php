@@ -75,6 +75,7 @@ if (!$result) {
     <nav class="site-nav">
       <a href="home.php" class="nav-btn nav-btn-outline">Home</a>
       <a href="login.html" class="nav-btn nav-btn-outline">Logout</a>
+      <a href="profile.php" class="nav-btn nav-btn-outline">Edit Profile</a>
     </nav>
 
   </div>

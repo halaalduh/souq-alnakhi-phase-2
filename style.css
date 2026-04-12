@@ -593,6 +593,17 @@ button:hover{
   vertical-align:middle;
 }
 
+.admin-inline-input{
+  width:100%;
+  min-width:170px;
+  border:1px solid #ead9dd;
+  border-radius:8px;
+  padding:9px 10px;
+  font:inherit;
+  color:#3b2f32;
+  background:#fff;
+}
+
 .dashboard-products-list{
   margin-top:18px;
 }
@@ -2177,4 +2188,19 @@ justify-content:center;
 
 .success-message{
   color: #2c6e49;
+}
+.profile-page-wrap{
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.profile-card-wide{
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.readonly-field{
+  background:#f1f3f1;
+  color:#666;
+  cursor:not-allowed;
 }
