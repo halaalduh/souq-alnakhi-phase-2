@@ -1,4 +1,5 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -49,12 +50,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $insert_result = mysqli_query($conn, $insert_sql);
 
-            if ($insert_result) {
-                header("Location: home.php");
-                exit();
-            } else {
-                die("Insert failed: " . mysqli_error($conn));
-            }
+
+          if ($insert_result) {
+
+    // store session (log user in immediately)
+    $_SESSION["user_id"] = mysqli_insert_id($conn);
+    $_SESSION["full_name"] = $full_name;
+    $_SESSION["email"] = $email;
+    $_SESSION["role"] = $role;
+
+    // redirect based on role
+    if ($role == "farmer") {
+        header("Location: Farmerdashboard.php");
+    } else {
+        header("Location: home.php");
+    }
+
+    exit();
+}
         }
     }
 }
