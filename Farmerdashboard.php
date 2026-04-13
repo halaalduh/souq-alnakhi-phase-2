@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 include "config.php";
 
@@ -24,7 +27,7 @@ if (isset($_GET["delete"])) {
         mysqli_stmt_close($deleteStmt);
     }
 
-    header("Location: FarmerDashboard.php?product=deleted");
+    header("Location: Farmerdashboard.php?product=deleted");
     exit();
 }
 
@@ -69,6 +72,64 @@ function getImagePath($image) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Farmer Dashboard - Souq Al-Nakhil</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .product-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .product-table th {
+      background: #f7f3f4;
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+      color: #5a3f46;
+    }
+
+    .product-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e5dfe1;
+      vertical-align: middle;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .product-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid #ddd;
+    }
+
+    .btn-edit {
+      color: #2e7d32;
+      font-weight: 600;
+      text-decoration: none;
+      margin-right: 8px;
+    }
+
+    .btn-delete {
+      color: #c62828;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .btn-edit:hover,
+    .btn-delete:hover {
+      text-decoration: underline;
+    }
+
+    .products-wrapper {
+      overflow-x: auto;
+    }
+
+    .empty-message {
+      padding: 20px 0;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
 
@@ -193,50 +254,44 @@ function getImagePath($image) {
         </div>
       </div>
 
-      <div class="dashboard-products-list">
-        <div class="dashboard-products-head">
-          <span>Product Image</span>
-          <span>Product Name</span>
-          <span>Date Type</span>
-          <span>Price</span>
-          <span>Quantity</span>
-          <span>Region</span>
-          <span>Description</span>
-          <span>Actions</span>
-        </div>
-
-        <div id="dashboardProductsBody" class="dashboard-products-body">
-          <?php if (empty($products)): ?>
-            <div class="product-row">
-              <span>No image</span>
-              <span>No products yet</span>
-              <span>-</span>
-              <span>-</span>
-              <span>-</span>
-              <span><?php echo htmlspecialchars($farm["region"]); ?></span>
-              <span>Add your first product.</span>
-              <span>-</span>
-            </div>
-          <?php else: ?>
-            <?php foreach ($products as $product): ?>
-              <div class="product-row">
-                <span>
-                  <img src="<?php echo htmlspecialchars(getImagePath($product["image"])); ?>" alt="Product" style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
-                </span>
-                <span><?php echo htmlspecialchars($product["product_name"]); ?></span>
-                <span><?php echo htmlspecialchars($product["date_type"]); ?></span>
-                <span><?php echo htmlspecialchars($product["price"]); ?> SAR</span>
-                <span><?php echo htmlspecialchars($product["quantity"]); ?></span>
-                <span><?php echo htmlspecialchars($farm["region"]); ?></span>
-                <span><?php echo htmlspecialchars($product["description"]); ?></span>
-                <span>
-                  <a href="editProduct.php?id=<?php echo $product["id"]; ?>">Edit</a> |
-                  <a href="FarmerDashboard.php?delete=<?php echo $product["id"]; ?>" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
-                </span>
-              </div>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </div>
+      <div class="products-wrapper">
+        <?php if (empty($products)): ?>
+          <p class="empty-message">No products yet.</p>
+        <?php else: ?>
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Date Type</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Region</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($products as $product): ?>
+                <tr>
+                  <td>
+                    <img src="<?php echo htmlspecialchars(getImagePath($product["image"])); ?>" alt="Product" class="product-img">
+                  </td>
+                  <td><?php echo htmlspecialchars($product["product_name"]); ?></td>
+                  <td><?php echo htmlspecialchars($product["date_type"]); ?></td>
+                  <td><?php echo htmlspecialchars($product["price"]); ?> SAR</td>
+                  <td><?php echo htmlspecialchars($product["quantity"]); ?></td>
+                  <td><?php echo htmlspecialchars($farm["region"]); ?></td>
+                  <td><?php echo htmlspecialchars($product["description"]); ?></td>
+                  <td>
+                    <a class="btn-edit" href="editProduct.php?id=<?php echo $product["id"]; ?>">Edit</a>
+                    <a class="btn-delete" href="Farmerdashboard.php?delete=<?php echo $product["id"]; ?>" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        <?php endif; ?>
       </div>
     </section>
     <?php endif; ?>
@@ -264,6 +319,5 @@ function getImagePath($image) {
     </div>
   </footer>
 
- 
 </body>
 </html>
