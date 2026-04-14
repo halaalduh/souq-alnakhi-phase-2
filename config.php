@@ -1,15 +1,8 @@
+
 <?php
-$host = "127.0.0.1";
-$user = "root";
-$password = "root";
-$database = "souq_alnakhil_db";
-$port = 8889;
+$conn = new mysqli("localhost", "root", "", "souq_alnakhil_db");
 
-$conn = mysqli_connect($host, $user, $password, $database, $port);
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-
-mysqli_set_charset($conn, "utf8");
 ?>

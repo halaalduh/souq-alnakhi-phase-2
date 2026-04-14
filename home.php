@@ -1,8 +1,19 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include("config.php");
+
+/*
+  Protect home page:
+  If user did not log in, send them to login page.
+  Change 'user_id' if your session variable has another name.
+*/
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
 $product_name = isset($_GET['product_name']) ? trim($_GET['product_name']) : '';
 $farm_name    = isset($_GET['farm_name']) ? trim($_GET['farm_name']) : '';
@@ -51,6 +62,7 @@ if (!$result) {
     die("Query failed: " . mysqli_error($conn));
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,7 +86,7 @@ if (!$result) {
 
     <nav class="site-nav">
       <a href="home.php" class="nav-btn nav-btn-outline">Home</a>
-      <a href="login.html" class="nav-btn nav-btn-outline">Logout</a>
+      <a href="logout.php" class="nav-btn nav-btn-outline">Logout</a>
       <a href="profile.php" class="nav-btn nav-btn-outline">Edit Profile</a>
     </nav>
 
@@ -150,15 +162,31 @@ if (!$result) {
       </div>
     </div>
 
-    <?php if (mysqli_num_rows($result) > 0) { ?>
+    <?php if (mysqli_num_rows($result) > 0): ?>
       <div class="products-grid" id="productsGrid">
-        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-          <div class="market-card">
-            <img src="images/default-product.png" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
+        <?php while ($row = mysqli_fetch_assoc($result)): ?>
 
-            <?php if ((int)$row['is_verified'] === 1) { ?>
+          <?php
+          $type = strtolower(trim($row['date_type']));
+          $image = '';
+
+          if ($type === 'ajwa') {
+              $image = 'images/ajwa.png';
+          } elseif ($type === 'sukkari') {
+              $image = 'images/sukkari.png';
+          } elseif ($type === 'khalas') {
+              $image = 'images/khalas.png';
+          }
+          ?>
+
+          <div class="market-card">
+            <?php if ($image !== ''): ?>
+              <img src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
+            <?php endif; ?>
+
+            <?php if ((int)$row['is_verified'] === 1): ?>
               <span class="trusted-badge">✔ Trusted Farmer</span>
-            <?php } ?>
+            <?php endif; ?>
 
             <h4>
               <a href="product-details.php?id=<?php echo $row['product_id']; ?>" class="product-link">
@@ -173,11 +201,15 @@ if (!$result) {
             <p><strong>Quantity:</strong> <?php echo htmlspecialchars($row['quantity']); ?> boxes</p>
             <p class="card-desc"><?php echo htmlspecialchars($row['description']); ?></p>
           </div>
-        <?php } ?>
+
+        <?php endwhile; ?>
       </div>
-    <?php } else { ?>
-      <p id="noResultsMessage" class="notice">No matching products found.</p>
-    <?php } ?>
+    <?php else: ?>
+      <div id="noResultsMessage" class="notice" style="text-align:center; padding:30px;">
+        <h4>No products available yet</h4>
+        <p>Products will appear here after farmers add them.</p>
+      </div>
+    <?php endif; ?>
   </section>
 </main>
 
