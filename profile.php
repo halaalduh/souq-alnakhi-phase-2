@@ -21,7 +21,11 @@ if (!$result || mysqli_num_rows($result) == 0) {
 $user = mysqli_fetch_assoc($result);
 
 if (isset($_GET["success"])) {
-    $message = "Profile updated successfully.";
+    if ($_GET["success"] === "profile") {
+        $message = "Profile updated successfully.";
+    } elseif ($_GET["success"] === "password") {
+        $message = "Password updated successfully.";
+    }
     $messageType = "success-message";
 
     $query = "SELECT * FROM users WHERE id = '$user_id' LIMIT 1";
@@ -31,11 +35,17 @@ if (isset($_GET["success"])) {
 
 if (isset($_GET["error"])) {
     if ($_GET["error"] === "empty") {
-        $message = "Please fill all fields.";
+        $message = "Please fill all required fields.";
     } elseif ($_GET["error"] === "email") {
         $message = "Invalid email format.";
     } elseif ($_GET["error"] === "exists") {
         $message = "This email is already used.";
+    } elseif ($_GET["error"] === "oldpassword") {
+        $message = "Current password is incorrect.";
+    } elseif ($_GET["error"] === "newpasswordempty") {
+        $message = "Please enter the new password and confirm it.";
+    } elseif ($_GET["error"] === "passwordmatch") {
+        $message = "New password and confirm password do not match.";
     } else {
         $message = "Something went wrong.";
     }
@@ -72,7 +82,7 @@ if (isset($_GET["error"])) {
           <a href="home.php">Home</a>
         <?php } ?>
 
-        <a href="profile.php" class="nav-btn nav-btn-outline">Profile</a>
+        <a href="profile.php" class="nav-btn nav-btn-outline">Edit Profile</a>
         <a href="logout.php" class="nav-btn nav-btn-solid">Logout</a>
       </nav>
 
@@ -111,6 +121,30 @@ if (isset($_GET["error"])) {
             value="<?php echo htmlspecialchars(ucfirst($user["role"])); ?>"
             readonly
             class="readonly-field"
+          >
+
+          <label for="current_password">Current Password</label>
+          <input
+            type="password"
+            id="current_password"
+            name="current_password"
+            placeholder="Enter your current password"
+            >
+
+          <label for="new_password">New Password</label>
+          <input
+            type="password"
+            id="new_password"
+            name="new_password"
+            placeholder="Enter new password"
+          >
+
+          <label for="confirm_new_password">Confirm New Password</label>
+          <input
+            type="password"
+            id="confirm_new_password"
+            name="confirm_new_password"
+            placeholder="Confirm new password"
           >
 
           <div class="auth-actions">
