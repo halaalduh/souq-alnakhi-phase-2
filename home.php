@@ -5,20 +5,16 @@ ini_set('display_errors', 1);
 
 include("config.php");
 
-/*
-  Protect home page
-  If user did not log in, send them to login page.
-  Change 'user_id' if your session variable has another name.
-*/
+
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-$product_name = isset($_GET['product_name']) ? trim($_GET['product_name']) : '';
-$farm_name    = isset($_GET['farm_name']) ? trim($_GET['farm_name']) : '';
-$region       = isset($_GET['region']) ? trim($_GET['region']) : '';
-$date_type    = isset($_GET['date_type']) ? trim($_GET['date_type']) : '';
+$search    = isset($_GET['search']) ? trim($_GET['search']) : '';
+$region    = isset($_GET['region']) ? trim($_GET['region']) : '';
+$date_type = isset($_GET['date_type']) ? trim($_GET['date_type']) : '';
 
 $sql = "SELECT 
             p.id AS product_id,
@@ -34,35 +30,50 @@ $sql = "SELECT
         INNER JOIN farms f ON p.farm_id = f.id
         WHERE 1=1";
 
-if ($product_name !== '') {
-    $product_name_escaped = mysqli_real_escape_string($conn, $product_name);
-    $sql .= " AND p.product_name LIKE '%$product_name_escaped%'";
-}
+$params = [];
+$types = "";
 
-if ($farm_name !== '') {
-    $farm_name_escaped = mysqli_real_escape_string($conn, $farm_name);
-    $sql .= " AND f.farm_name LIKE '%$farm_name_escaped%'";
+if ($search !== '') {
+    $sql .= " AND (p.product_name LIKE ? OR f.farm_name LIKE ?)";
+    $search_like = "%" . $search . "%";
+    $params[] = $search_like;
+    $params[] = $search_like;
+    $types .= "ss";
 }
 
 if ($region !== '') {
-    $region_escaped = mysqli_real_escape_string($conn, $region);
-    $sql .= " AND f.region = '$region_escaped'";
+    $sql .= " AND f.region = ?";
+    $params[] = $region;
+    $types .= "s";
 }
 
 if ($date_type !== '') {
-    $date_type_escaped = mysqli_real_escape_string($conn, $date_type);
-    $sql .= " AND p.date_type = '$date_type_escaped'";
+    $sql .= " AND p.date_type = ?";
+    $params[] = $date_type;
+    $types .= "s";
 }
 
 $sql .= " ORDER BY p.id DESC";
 
-$result = mysqli_query($conn, $sql);
+$stmt = mysqli_prepare($conn, $sql);
+
+if (!$stmt) {
+    die("Prepare failed: " . mysqli_error($conn));
+}
+
+if (!empty($params)) {
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+}
+
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
 if (!$result) {
     die("Query failed: " . mysqli_error($conn));
 }
-?>
 
+$has_filters = ($search !== '' || $region !== '' || $date_type !== '');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,7 +114,7 @@ if (!$result) {
       <div>
         <h1>Discover Fresh Saudi Dates</h1>
         <p>
-          Browse products from local farms, search by name, and filter by region or date type
+          Browse products from local farms, search by product or farm name, and filter by region or date type
           to find the dates that match your preference.
         </p>
       </div>
@@ -115,25 +126,17 @@ if (!$result) {
     <div class="section-head">
       <div>
         <h3>Search & Filter</h3>
-        <p>Find products easily using the search bar and filters below.</p>
+        <p>Use one search box for product name or farm name, then apply filters if needed.</p>
       </div>
     </div>
 
     <form class="filter-form" method="GET" action="home.php">
       <input
         type="text"
-        id="productSearchInput"
-        name="product_name"
-        placeholder="Search by product name"
-        value="<?php echo htmlspecialchars($product_name); ?>"
-      >
-
-      <input
-        type="text"
-        id="farmSearchInput"
-        name="farm_name"
-        placeholder="Search by farm name"
-        value="<?php echo htmlspecialchars($farm_name); ?>"
+        id="searchInput"
+        name="search"
+        placeholder="Search by product or farm name"
+        value="<?php echo htmlspecialchars($search); ?>"
       >
 
       <select id="regionFilter" name="region">
@@ -165,7 +168,6 @@ if (!$result) {
     <?php if (mysqli_num_rows($result) > 0): ?>
       <div class="products-grid" id="productsGrid">
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-
           <?php
           $type = strtolower(trim($row['date_type']));
           $image = '';
@@ -201,13 +203,17 @@ if (!$result) {
             <p><strong>Quantity:</strong> <?php echo htmlspecialchars($row['quantity']); ?> boxes</p>
             <p class="card-desc"><?php echo htmlspecialchars($row['description']); ?></p>
           </div>
-
         <?php endwhile; ?>
       </div>
     <?php else: ?>
       <div id="noResultsMessage" class="notice" style="text-align:center; padding:30px;">
-        <h4>No products available yet</h4>
-        <p>Products will appear here after farmers add them.</p>
+        <?php if ($has_filters): ?>
+          <h4>No matching products found</h4>
+          <p>Try changing the search text or filters and search again.</p>
+        <?php else: ?>
+          <h4>No products available yet</h4>
+          <p>Products will appear here after farmers add them.</p>
+        <?php endif; ?>
       </div>
     <?php endif; ?>
   </section>
