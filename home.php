@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 include("config.php");
 
 /*
-  Protect home page:
+  Protect home page
   If user did not log in, send them to login page.
   Change 'user_id' if your session variable has another name.
 */
