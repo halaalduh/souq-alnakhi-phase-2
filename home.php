@@ -5,6 +5,8 @@ ini_set('display_errors', 1);
 
 include("config.php");
 
+
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
