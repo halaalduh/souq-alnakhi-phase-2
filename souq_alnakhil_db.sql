@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 11, 2026 at 07:17 PM
+-- Generation Time: Apr 19, 2026 at 07:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -44,7 +44,8 @@ CREATE TABLE `farms` (
 
 INSERT INTO `farms` (`id`, `farmer_user_id`, `farm_name`, `region`, `farm_description`, `contact_phone`, `contact_email`, `is_verified`) VALUES
 (7, 2, 'Palm Valley', 'Qassim', 'Trusted farm producing premium Sukkari dates.', '0551111111', 'palmvalley@souq.com', 1),
-(8, 3, 'Golden Palm Farm', 'Najd', 'Local farm offering fresh Khalas dates.', '0552222222', 'goldenpalm@souq.com', 0);
+(8, 3, 'Golden Palm Farm', 'Najd', 'Local farm offering fresh Khalas dates.', '0552222222', 'goldenpalm@souq.com', 0),
+(9, 10, 'Haifa Fram', 'Qassim', 'hello', '0600011891', 'haifathefirst@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -68,9 +69,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `farm_id`, `product_name`, `date_type`, `price`, `quantity`, `description`, `image`) VALUES
-(10, 7, 'Sukkari Dates', 'Sukkari', 35.00, 15, 'Sweet and soft Sukkari dates, perfect for daily use.', 'sukkari.png'),
-(11, 7, 'Ajwa Dates', 'Ajwa', 45.00, 20, 'Fresh premium Ajwa dates from a trusted local farm.', 'ajwa.png'),
-(12, 8, 'Khalas Dates', 'Khalas', 40.00, 12, 'High-quality Khalas dates with rich texture and flavor.', 'khalas.png');
+(10, 7, 'Sukkari Dates', 'Sukkari', 35.00, 15, 'Sweet and soft Sukkari dates, perfect for daily use.', '\r\n'),
+(11, 7, 'Ajwa Dates', 'Ajwa', 45.00, 20, 'Fresh premium Ajwa dates from a trusted local farm.', ''),
+(12, 8, 'Khalas Dates', 'Khalas', 40.00, 12, 'High-quality Khalas dates with rich texture and flavor.', ''),
+(15, 9, 's', 'Sukkari', 12.00, 12, '12', '');
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,10 @@ INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `created_at
 (2, 'Farmer One', 'farmer1@souq.com', '123456', 'farmer', '2026-04-11 15:36:22'),
 (3, 'Farmer Two', 'farmer2@souq.com', '123456', 'farmer', '2026-04-11 15:36:22'),
 (6, 'Haifa', 'haifathefirst@gmail.com', '$2y$10$T5mVPjC1TIZm00eMGnMp..Jq4lBskNcLGVnROIB6kFRULkiQC1Mre', 'customer', '2026-04-11 16:53:09'),
-(7, 'haifa', 'haifatfirst@gmail.com', '$2y$10$6mabbYi6./rnQmQ363YVKOpCPQJuRx/ap7Hg5HzZGFkMtZhWBBRua', 'farmer', '2026-04-11 16:54:03');
+(7, 'haifa', 'haifatfirst@gmail.com', '$2y$10$6mabbYi6./rnQmQ363YVKOpCPQJuRx/ap7Hg5HzZGFkMtZhWBBRua', 'farmer', '2026-04-11 16:54:03'),
+(8, 'Haifa', 'hirst@gmail.com', '$2y$10$OIMLRLLtCqW6LCu0VaMCU.COWyWnj2FEu3vSrbiJCh/avXjtXFAiu', 'customer', '2026-04-14 06:55:11'),
+(9, 'Haifa', 'hefirst@gmail.com', '$2y$10$5JznUDY5lI2ccyKAgd3EeuXQdlwWJCoeVYJWmDCEFeDCeQKRrf5gO', 'farmer', '2026-04-14 07:00:04'),
+(10, 'Haifa', 'h1@gmail.com', '$2y$10$Y38wTWufVPDxGMP.tugbcu4iFcKLVr2AxHfO9HMLSj277X1Kpx5Ii', 'farmer', '2026-04-14 07:02:10');
 
 --
 -- Indexes for dumped tables
@@ -131,19 +136,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `farms`
 --
 ALTER TABLE `farms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

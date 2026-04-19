@@ -21,6 +21,7 @@ $sql = "SELECT
             p.price,
             p.quantity,
             p.description,
+            p.image,
             f.farm_name,
             f.region,
             f.is_verified
@@ -84,7 +85,6 @@ $has_filters = ($search !== '' || $region !== '' || $date_type !== '');
 
 <header class="site-header">
   <div class="header-container">
-
     <a href="home.php" class="brand">
       <img src="logo.png" class="brand-logo" alt="Souq Al-Nakhil Logo">
       <div class="brand-text">
@@ -98,7 +98,6 @@ $has_filters = ($search !== '' || $region !== '' || $date_type !== '');
       <a href="logout.php" class="nav-btn nav-btn-outline">Logout</a>
       <a href="profile.php" class="nav-btn nav-btn-outline">Edit Profile</a>
     </nav>
-
   </div>
 </header>
 
@@ -167,22 +166,15 @@ $has_filters = ($search !== '' || $region !== '' || $date_type !== '');
       <div class="products-grid" id="productsGrid">
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
           <?php
-          $type = strtolower(trim($row['date_type']));
-          $image = '';
+          $image = 'logo.png';
 
-          if ($type === 'ajwa') {
-              $image = 'images/ajwa.png';
-          } elseif ($type === 'sukkari') {
-              $image = 'images/sukkari.png';
-          } elseif ($type === 'khalas') {
-              $image = 'images/khalas.png';
+          if (!empty($row['image']) && file_exists(__DIR__ . '/uploads/' . $row['image'])) {
+              $image = 'uploads/' . $row['image'];
           }
           ?>
 
           <div class="market-card">
-            <?php if ($image !== ''): ?>
-              <img src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
-            <?php endif; ?>
+            <img src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
 
             <?php if ((int)$row['is_verified'] === 1): ?>
               <span class="trusted-badge">✔ Trusted Farmer</span>
