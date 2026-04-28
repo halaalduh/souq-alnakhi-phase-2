@@ -217,12 +217,10 @@ function getImagePath($image) {
       <div class="section-head">
         <div>
           <span class="status-badge active">Farmer Profile</span>
-          <h3>Welcome Section</h3>
-          <p>The farmer account is active and connected to the farm profile.</p>
         </div>
       </div>
 
-      <div class="info-grid">
+      <div class="farm-info-only">
         <div class="info-card">
           <h4>Farm Information</h4>
           <ul class="meta-list">
@@ -231,13 +229,6 @@ function getImagePath($image) {
             <li><strong>Date Types:</strong> <span id="dashboardFarmDateTypes">Managed through products</span></li>
             <li><strong>Description:</strong> <span id="dashboardFarmDescription"><?php echo htmlspecialchars($farm["farm_description"]); ?></span></li>
           </ul>
-        </div>
-
-        <div class="info-card">
-          <h4>Current Logic</h4>
-          <div class="notice">
-            The farm profile has already been created. The dashboard now shows the farm name and enables the product actions.
-          </div>
         </div>
       </div>
     </section>
