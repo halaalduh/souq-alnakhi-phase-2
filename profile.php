@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 include "config.php";
 
@@ -20,6 +22,17 @@ if (!$result || mysqli_num_rows($result) == 0) {
 
 $user = mysqli_fetch_assoc($result);
 
+$farm = null;
+
+if ($user["role"] === "farmer") {
+    $farm_query = "SELECT * FROM farms WHERE farmer_user_id = '$user_id' OR farmer_user_id = '$user_id' LIMIT 1";
+    $farm_result = mysqli_query($conn, $farm_query);
+
+    if ($farm_result && mysqli_num_rows($farm_result) > 0) {
+        $farm = mysqli_fetch_assoc($farm_result);
+    }
+}
+
 if (isset($_GET["success"])) {
     if ($_GET["success"] === "profile") {
         $message = "Profile updated successfully.";
@@ -27,10 +40,6 @@ if (isset($_GET["success"])) {
         $message = "Password updated successfully.";
     }
     $messageType = "success-message";
-
-    $query = "SELECT * FROM users WHERE id = '$user_id' LIMIT 1";
-    $result = mysqli_query($conn, $query);
-    $user = mysqli_fetch_assoc($result);
 }
 
 if (isset($_GET["error"])) {
@@ -44,9 +53,13 @@ if (isset($_GET["error"])) {
         $message = "Current password is incorrect.";
     } elseif ($_GET["error"] === "newpasswordempty") {
         $message = "Please enter the new password and confirm it.";
+    } elseif ($_GET["error"] === "passwordlength") {
+        $message = "New password must be at least 4 characters.";
     } elseif ($_GET["error"] === "passwordmatch") {
         $message = "New password and confirm password do not match.";
-    } else {
+    }elseif ($_GET["error"] === "phone") {
+    $message = "Phone number must be exactly 10 digits.";
+} else {
         $message = "Something went wrong.";
     }
     $messageType = "error-message";
@@ -118,10 +131,29 @@ if (isset($_GET["error"])) {
           <input
             type="text"
             id="role"
-            value="<?php echo htmlspecialchars(ucfirst($user["role"])); ?>"
-            readonly
+            value="<?php echo htmlspecialchars(ucfirst($user["role"])); ?>"readonly
             class="readonly-field"
           >
+
+          <?php if ($user["role"] === "farmer") { ?>
+            <label for="contact_phone">Farm Contact Phone</label>
+            <input
+              type="text"
+              id="contact_phone"
+              name="contact_phone"
+              value="<?php echo htmlspecialchars($farm["contact_phone"] ?? ""); ?>"
+              placeholder="Enter farm phone number"
+            >
+
+            <label for="contact_email">Farm Contact Email</label>
+            <input
+              type="email"
+              id="contact_email"
+              name="contact_email"
+              value="<?php echo htmlspecialchars($farm["contact_email"] ?? ""); ?>"
+              placeholder="Enter farm contact email"
+            >
+          <?php } ?>
 
           <label for="current_password">Current Password</label>
           <input
@@ -129,7 +161,7 @@ if (isset($_GET["error"])) {
             id="current_password"
             name="current_password"
             placeholder="Enter your current password"
-            >
+          >
 
           <label for="new_password">New Password</label>
           <input
@@ -137,6 +169,7 @@ if (isset($_GET["error"])) {
             id="new_password"
             name="new_password"
             placeholder="Enter new password"
+            minlength="4"
           >
 
           <label for="confirm_new_password">Confirm New Password</label>
@@ -145,15 +178,18 @@ if (isset($_GET["error"])) {
             id="confirm_new_password"
             name="confirm_new_password"
             placeholder="Confirm new password"
+            minlength="4"
           >
 
           <div class="auth-actions">
             <button type="submit" class="auth-btn auth-btn-customer">Save Changes</button>
           </div>
 
-          <p class="form-message <?php echo $messageType; ?>">
-            <?php echo htmlspecialchars($message); ?>
-          </p>
+          <?php if ($message !== "") { ?>
+            <p class="form-message <?php echo $messageType; ?>">
+              <?php echo htmlspecialchars($message); ?>
+            </p>
+          <?php } ?>
         </form>
       </div>
     </div>
