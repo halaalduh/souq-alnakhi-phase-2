@@ -21,6 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $message = "Invalid email format.";
         $messageType = "error-message";
+    } elseif (strlen($password) < 4) {
+        $message = "Password must be at least 4 characters.";
+        $messageType = "error-message";
     } elseif ($password !== $confirm_password) {
         $message = "Passwords do not match.";
         $messageType = "error-message";
@@ -50,24 +53,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $insert_result = mysqli_query($conn, $insert_sql);
 
+            if ($insert_result) {
+                $_SESSION["user_id"] = mysqli_insert_id($conn);
+                $_SESSION["full_name"] = $full_name;
+                $_SESSION["email"] = $email;
+                $_SESSION["role"] = $role;
 
-          if ($insert_result) {
+                if ($role == "farmer") {
+                    header("Location: Farmerdashboard.php");
+                } else {
+                    header("Location: home.php");
+                }
 
-    // store session (log user in immediately)
-    $_SESSION["user_id"] = mysqli_insert_id($conn);
-    $_SESSION["full_name"] = $full_name;
-    $_SESSION["email"] = $email;
-    $_SESSION["role"] = $role;
-
-    // redirect based on role
-    if ($role == "farmer") {
-        header("Location: Farmerdashboard.php");
-    } else {
-        header("Location: home.php");
-    }
-
-    exit();
-}
+                exit();
+            } else {
+                $message = "Registration failed. Please try again.";
+                $messageType = "error-message";
+            }
         }
     }
 }
@@ -111,8 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             that supports local agriculture and transparent shopping.
           </p>
         </div>
-
-        <div class="hero-image-box">
+          <div class="hero-image-box">
           <img src="images/farmer-register.jpg" alt="Saudi Farm" class="hero-image">
         </div>
       </section>
@@ -130,10 +131,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="email" id="register-email" name="email" placeholder="Enter your email" required>
 
             <label for="register-password">Password</label>
-            <input type="password" id="register-password" name="password" placeholder="Create a password" required>
+            <input type="password" id="register-password" name="password" placeholder="Create a password" minlength="4" required>
 
             <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password" required>
+            <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password" minlength="4" required>
 
             <div class="auth-actions">
               <button type="submit" class="auth-btn auth-btn-customer" name="role" value="customer">Register as Customer</button>
