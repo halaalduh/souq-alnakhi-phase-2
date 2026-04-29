@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-
+$customer_name = $_SESSION["full_name"] ?? "Customer";
 $search    = isset($_GET['search']) ? trim($_GET['search']) : '';
 $region    = isset($_GET['region']) ? trim($_GET['region']) : '';
 $date_type = isset($_GET['date_type']) ? trim($_GET['date_type']) : '';
@@ -108,18 +108,21 @@ $has_filters = ($search !== '' || $region !== '' || $date_type !== '');
 </div>
 
 <main class="page-shell">
-  <section class="dashboard-hero">
-    <div class="dashboard-hero-top">
-      <div>
-        <h1>Discover Fresh Saudi Dates</h1>
-        <p>
-          Browse products from local farms, search by product or farm name, and filter by region or date type
-          to find the dates that match your preference.
-        </p>
-      </div>
-      <span class="welcome-pill">Fresh • Local • Trusted</span>
+ <section class="dashboard-hero">
+  <div class="dashboard-hero-top">
+    <div>
+      <h1>Discover Fresh Saudi Dates</h1>
+      <p>
+        Browse products from local farms, search by product or farm name, and filter by region or date type
+        to find the dates that match your preference.
+      </p>
     </div>
-  </section>
+
+    <div class="welcome-pill">
+      Welcome, <span><?php echo htmlspecialchars($customer_name); ?></span>
+    </div>
+  </div>
+</section>
 
   <section class="panel">
     <div class="section-head">
