@@ -87,15 +87,6 @@ function getImagePath($image) {
       color: #5a3f46;
     }
 
-    .success-msg {
-    background: #e6f4ea;
-    color: #2e7d32;
-    padding: 12px 18px;
-    border-radius: 10px;
-    margin: 15px 0;
-    font-weight: 600;
-    border: 1px solid #c8e6c9;
-}
     .product-table td {
       padding: 12px;
       border-bottom: 1px solid #e5dfe1;
@@ -164,22 +155,6 @@ function getImagePath($image) {
   </div>
 
   <main class="page-shell">
-      
-      <?php
-if (isset($_GET['farm']) && $_GET['farm'] == 'created') {
-    echo '<div class="success-msg">Farm created successfully!</div>';
-}
-
-if (isset($_GET['product'])) {
-    if ($_GET['product'] == 'added') {
-        echo '<div class="success-msg">Product added successfully!</div>';
-    } elseif ($_GET['product'] == 'updated') {
-        echo '<div class="success-msg"> Product updated successfully!</div>';
-    } elseif ($_GET['product'] == 'deleted') {
-        echo '<div class="success-msg">Product deleted successfully!</div>';
-    }
-}
-?>
     <section class="dashboard-hero">
       <div class="dashboard-hero-top">
         <div>
@@ -242,12 +217,10 @@ if (isset($_GET['product'])) {
       <div class="section-head">
         <div>
           <span class="status-badge active">Farmer Profile</span>
-          <h3>Welcome Section</h3>
-          <p>The farmer account is active and connected to the farm profile.</p>
         </div>
       </div>
 
-      <div class="info-grid">
+      <div class="farm-info-only">
         <div class="info-card">
           <h4>Farm Information</h4>
           <ul class="meta-list">
@@ -256,13 +229,6 @@ if (isset($_GET['product'])) {
             <li><strong>Date Types:</strong> <span id="dashboardFarmDateTypes">Managed through products</span></li>
             <li><strong>Description:</strong> <span id="dashboardFarmDescription"><?php echo htmlspecialchars($farm["farm_description"]); ?></span></li>
           </ul>
-        </div>
-
-        <div class="info-card">
-          <h4>Current Logic</h4>
-          <div class="notice">
-            The farm profile has already been created. The dashboard now shows the farm name and enables the product actions.
-          </div>
         </div>
       </div>
     </section>

@@ -533,6 +533,14 @@ button:hover{
   gap:18px;
 }
 
+.farm-info-only{
+  display:block;
+}
+
+.farm-info-only .info-card{
+  width:100%;
+}
+
 .info-card{
   background:#fcf9fa;
   border:1px solid #eee3e5;
@@ -1390,6 +1398,14 @@ pointer-events:none;
 display:grid;
 grid-template-columns:1.25fr 1fr;
 gap:18px;
+}
+
+.farm-info-only{
+display:block;
+}
+
+.farm-info-only .info-card{
+width:100%;
 }
 
 .info-card{
