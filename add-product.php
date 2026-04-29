@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if (mysqli_stmt_execute($insertProduct)) {
                 mysqli_stmt_close($insertProduct);
-                header("Location: farmerDashboard.php?product=added");
+                header("Location: FarmerDashboard.php?product=added");
                 exit();
             } else {
                 $error = "Something went wrong while adding the product.";

@@ -87,6 +87,15 @@ function getImagePath($image) {
       color: #5a3f46;
     }
 
+    .success-msg {
+    background: #e6f4ea;
+    color: #2e7d32;
+    padding: 12px 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-weight: 600;
+    border: 1px solid #c8e6c9;
+}
     .product-table td {
       padding: 12px;
       border-bottom: 1px solid #e5dfe1;
@@ -155,6 +164,22 @@ function getImagePath($image) {
   </div>
 
   <main class="page-shell">
+      
+      <?php
+if (isset($_GET['farm']) && $_GET['farm'] == 'created') {
+    echo '<div class="success-msg">Farm created successfully!</div>';
+}
+
+if (isset($_GET['product'])) {
+    if ($_GET['product'] == 'added') {
+        echo '<div class="success-msg">Product added successfully!</div>';
+    } elseif ($_GET['product'] == 'updated') {
+        echo '<div class="success-msg"> Product updated successfully!</div>';
+    } elseif ($_GET['product'] == 'deleted') {
+        echo '<div class="success-msg">Product deleted successfully!</div>';
+    }
+}
+?>
     <section class="dashboard-hero">
       <div class="dashboard-hero-top">
         <div>
